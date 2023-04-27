@@ -6,23 +6,23 @@ canvas.height = DISPLAY_PIXEL.HEIGHT * ASPECT_RATIO.HEIGHT
 
 
 const playerProperty = {
-    width: 100,
-    height: 150,
+    width: 50,
+    height: 50,
     speed: 1,
     color: "tomato",
     position:{
-        x: canvas.width - 100,
-        y: 0 
+        x: 100,
+        y: 150,
     }
 }
 const enemyProperty = {
-    width: 100,
-    height: 150,
+    width: 50,
+    height: 50,
     speed: 1,
     color: "black",
     position:{
         x: canvas.width - 100,
-        y: canvas.height - 150 
+        y: canvas.height / 2 
     }
 }
 
@@ -30,6 +30,21 @@ const ground = new Ground(canvas.width, canvas.height, "lightblue")
 const player = new Player(playerProperty)
 const enemy = new Player(enemyProperty)
 
-ground.create()
-player.create()
-enemy.create()
+
+function animate() {
+    ground.create()
+    player.create()
+    enemy.create()
+
+    player.update()
+    enemy.update()
+
+    window.requestAnimationFrame(animate)
+}
+
+window.addEventListener("keydown", function(callback) {
+    player.movement(callback.key)
+    enemy.movement(callback.key)
+})
+
+animate()
